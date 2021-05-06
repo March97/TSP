@@ -33,6 +33,7 @@ namespace TSP
             //losowanie poczatkowego wierzcholka
             Random random = new Random();
             int lastVisited = random.Next(0, visited.Count - 1);
+            int first = lastVisited;
             visited[lastVisited] = true;
             path.Add(lastVisited);
 
@@ -55,19 +56,19 @@ namespace TSP
                 path.Add(choice);
                 lastVisited = choice;
                 visited[choice] = true;
-            }
-            
+            } 
+            length += matrix.GetElement(lastVisited, first);
         }
 
         public void Print()
         {
-            Console.Write("Wybrana ścieżka: ");
+            Console.Write("Wybrana ścieżka NN: ");
             foreach (int n in this.path)
             {
                 Console.Write("P" + n + " ");
             }
             Console.WriteLine();
-            Console.Write("Długość ścieżki: " + this.length);
+            Console.WriteLine("Długość ścieżki NN: " + this.length);
         }
     }
 }

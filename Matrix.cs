@@ -53,7 +53,7 @@ namespace TSP
             }
         }
 
-        public double GetLength()
+        public int GetLength()
         {
             return matrix.GetLength(0);
         }
