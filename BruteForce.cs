@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,12 @@ namespace TSP
             {
                 toPermute[i] = i;
             }
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             calculate();
+            sw.Stop();
+            Console.WriteLine("Czas wykonania algorytmu BF: " + sw.ElapsedMilliseconds + " ms");
+
         }
 
         private void calculate()

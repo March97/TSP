@@ -8,16 +8,9 @@ namespace TSP
         {
             Console.WriteLine("Euklidesowy problem komiwojażera");
 
-            Vertice v1 = new (0.0, 0.0);
-            Vertice v2 = new (1.0, 0.0);
-            Vertice v3 = new (0.0, 1.0);
-            Vertice v4 = new (1.0, 1.0);
-            Vertice v5 = new (3.0, 3.0);
-            Vertice v6 = new (3.0, 0.0);
-            Vertice v7 = new (0.0, 3.0);
-            Vertice v8 = new (2.0, 2.0);
+            Generator g = new Generator();
 
-            Vertice[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8 };
+            Vertice[] vertices = g.Generate(12);
 
             Matrix matrix = new (vertices);
 
