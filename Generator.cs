@@ -20,7 +20,7 @@ namespace TSP
             Random rnd = new Random();
             for (int i = 0; i < n; i++)
             {
-                Vertice v = new Vertice(rnd.NextDouble() * max, rnd.NextDouble() * max);
+                Vertice v = new Vertice(rnd.NextDouble() * max, rnd.NextDouble() * max );
                 vertices[i] = v;
             }
             return vertices;

@@ -26,30 +26,32 @@ namespace TSP
             {
                 toPermute[i] = i;
             }
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            calculate();
-            sw.Stop();
-            Console.WriteLine("Czas wykonania algorytmu BF: " + sw.ElapsedMilliseconds + " ms");
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            //calculate();
+            //sw.Stop();
+            //Console.WriteLine("Czas wykonania algorytmu BF: " + sw.ElapsedMilliseconds + " ms");
 
         }
 
-        private void calculate()
+        public double Run()
         {
-            heapPermutation(toPermute, toPermute.Length, toPermute.Length);
-            getMin(pathsLength);
+            Stopwatch sw = new Stopwatch();
+            long kbAtExecution = GC.GetTotalMemory(false) / 1024;
+            sw.Start();
+            double min = calculate();
+            sw.Stop();
+            long kbAfter1 = GC.GetTotalMemory(false) / 1024;
+            Console.WriteLine("Czas wykonania algorytmu BF: " + sw.ElapsedMilliseconds + " ms");
+            Console.WriteLine("Pamięć dodana w czasie algorytmu BF: " + (kbAfter1 - kbAtExecution) + "kB");
+            return min;
         }
 
-        //public void Print()
-        //{
-        //    Console.Write("Wybrana ścieżka BF: ");
-        //    foreach (int n in this.paths)
-        //    {
-        //        Console.Write("P" + n + " ");
-        //    }
-        //    Console.WriteLine();
-        //    Console.WriteLine("Długość ścieżki BF: " + this.length);
-        //}
+        private double calculate()
+        {
+            GetPer(toPermute);
+            return getMin(pathsLength);
+        }
 
         double getMin(List<double> pathsLength)
         {
@@ -71,6 +73,7 @@ namespace TSP
             {
                 Console.Write("P" + n + " ");
             }
+            
             Console.WriteLine();
             Console.WriteLine("Długość ścieżki BF: " + min);
 
@@ -90,42 +93,35 @@ namespace TSP
             return sum;
         }
 
-        // Generating permutation using Heap Algorithm
-        void heapPermutation(int[] a, int size, int n)
+        private static void Swap(ref int a, ref int b)
         {
-            // if size becomes 1 then prints the obtained
-            // permutation
-            if (size == 1)
+            if (a == b) return;
+
+            var temp = a;
+            a = b;
+            b = temp;
+        }
+
+        public void GetPer(int[] list)
+        {
+            int x = list.Length - 1;
+            GetPer(list, 0, x);
+        }
+
+        private void GetPer(int[] list, int k, int m)
+        {
+            if (k == m)
             {
-                int[] b = new int[n];
-                for (int i = 0; i < n; i++)
-                    b[i] = a[i];
-                paths.Add(b);
-                pathsLength.Add(distanceCalculation(b));
+                paths.Add(list);
+                pathsLength.Add(distanceCalculation(list));
             }
-
-            for (int i = 0; i < size; i++)
-            {
-                heapPermutation(a, size - 1, n);
-
-                // if size is odd, swap 0th i.e (first) and
-                // (size-1)th i.e (last) element
-                if (size % 2 == 1)
+            else
+                for (int i = k; i <= m; i++)
                 {
-                    int temp = a[0];
-                    a[0] = a[size - 1];
-                    a[size - 1] = temp;
+                    Swap(ref list[k], ref list[i]);
+                    GetPer(list, k + 1, m);
+                    Swap(ref list[k], ref list[i]);
                 }
-
-                // If size is even, swap ith and
-                // (size-1)th i.e (last) element
-                else
-                {
-                    int temp = a[i];
-                    a[i] = a[size - 1];
-                    a[size - 1] = temp;
-                }
-            }
         }
 
     }
